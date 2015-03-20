@@ -31,7 +31,7 @@ FSLogger.setType(FSLogger.FSLoggerLimitationType.NOLimit);
 ```
 
 ##Usage:
-You have different option to use it.
+You have different options to use it.
 >- Simple: With a simple message
 
 ```sh
