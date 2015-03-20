@@ -1,7 +1,6 @@
 package fslogger.lizsoft.lv.fslogger;
 
 import android.util.Log;
-
 import java.util.ArrayList;
 
 /**
@@ -126,21 +125,21 @@ public class FSLogger {
 
     private static void logout(String message, int traceLevel)
     {
-        if (_instance.LOGGING_ENABLED && BuildConfig.DEBUG)
+        if (LOGGING_ENABLED)
         {
             if (message.length() > 3000) {
                 int length = message.length();
                 String str = message;
 
                 while (length > 3000) {
-                    Log.w(_instance.TAG, getClassNameMethodNameAndLineNumber(traceLevel) + str.substring(0, 3000));
+                    Log.d(_instance.TAG, getClassNameMethodNameAndLineNumber(traceLevel) + str.substring(0, 3000));
                     str = str.substring(3000);
                     length = str.length();
                 }
 
-                Log.w(_instance.TAG, getClassNameMethodNameAndLineNumber(traceLevel) + str);
+                Log.d(_instance.TAG, getClassNameMethodNameAndLineNumber(traceLevel) + str);
             } else {
-                Log.w(_instance.TAG, getClassNameMethodNameAndLineNumber(traceLevel) + message);
+                Log.d(_instance.TAG, getClassNameMethodNameAndLineNumber(traceLevel) + message);
             }
         }
     }
