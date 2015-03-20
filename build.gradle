@@ -1,0 +1,169 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        maven { url 'http://jcenter.bintray.com' }
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.0'
+        classpath 'com.android.tools.build:gradle:1.1.2'
+        classpath 'com.github.dcendents:android-maven-plugin:1.2'
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+apply plugin: 'groovy'
+apply plugin: 'maven-publish'
+apply plugin: 'idea'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.github.dcendents.android-maven'
+
+
+group = 'com.github.omegasoft7.FSLogger'
+version = '1.1.0'
+
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+//task writeNewPom << {
+//    pom {
+//        project {
+//            groupId 'com.github.omegasoft7.FSLogger'
+//            artifactId 'omegasoft7'
+//            version '1.0.0'
+//
+//            inceptionYear '2015'
+//            licenses {
+//                license {
+//                    name 'MIT'
+//                    url 'http://opensource.org/licenses/MIT'
+//                    distribution 'repo'
+//                }
+//            }
+//        }
+//    }.writeTo("$buildDir/1.0.0.pom.xml")
+//}
+
+
+//modifyPom {
+//    project {
+//        name "FSLogger"
+//        description "A new logger and log manager for Android that helps a lot to developer for debugging"
+//        packaging "jar"
+//        url "https://github.com/omegasoft7/FSLogger"
+//        inceptionYear "2013"
+//
+//        scm {
+//            url "https://github.com/omegasoft7/FSLogger"
+//            connection "scm:https://github.com/omegasoft7/FSLogger.git"
+//            developerConnection "scm:git://github.com/omegasoft7/FSLogger.git"
+//        }
+//
+//        licenses {
+//            license {
+//                name "The Apache Software License, Version 2.0"
+//                url "http://www.apache.org/licenses/LICENSE-2.0.txt"
+//                distribution "repo"
+//            }
+//        }
+//
+//        developers {
+//            developer {
+//                id "omegasoft7"
+//                name "Farhad Sanaei"
+//                email "omegasoft7@gmail.com"
+//            }
+//        }
+//    }
+//}
+
+
+artifacts {
+    archives jar
+    archives sourcesJar
+    archives javadocJar
+}
+
+dependencies {
+    compile gradleApi()
+    compile localGroovy()
+}
+
+task wrapper( type:Wrapper) {
+    gradleVersion = '2.1'
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+
+            groupId 'com.github.omegasoft7.FSLogger'
+            artifactId 'FSLogger'
+            version '1.1.0'
+
+            from components.java
+        }
+    }
+}
+
+// NOTE: run bintrayUpload and then go to web and publish.
+//       - ensure that the gradle-plugin attribute is on the version
+bintray {
+    user = property('bintray-user')
+    key = property('bintray-key')
+    dryRun = false
+    publish = true
+
+    configurations = ['archives']
+
+    pkg {
+        repo = 'AndroidLibraries'
+        name = 'FSLogger'
+        desc = 'A new logger and log manager for Android that helps a lot to developer for debugging'
+        licenses = ['Apache-2.0']
+        labels = ['Android', 'Logger', 'Locat', 'Manager']
+    }
+}
+
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'aar'
+                name 'FSLogger'
+                url 'https://github.com/omegasoft7/FSLogger'
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'Omegasoft7'
+                        name 'Farhad Sanaei'
+                    }
+                }
+                scm {
+                    connection 'https://github.com/omegasoft7/FSLogger.git'
+                    developerConnection 'https://github.com/omegasoft7/FSLogger.git'
+                    url 'https://github.com/omegasoft7/FSLogger.git'
+                }
+            }
+        }
+    }
+}

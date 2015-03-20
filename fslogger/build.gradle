@@ -1,0 +1,40 @@
+apply plugin: 'android-library'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
+
+    defaultConfig {
+        minSdkVersion 7
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+
+    task sourcesJar(type: Jar) {
+        classifier = 'sources'
+        from 'src/main/java'
+    }
+
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.1'
+}
+
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}
