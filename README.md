@@ -1,32 +1,87 @@
-Download:
+# Gradle:
 
 compile 'com.github.omegasoft7.FSLogger:FSLogger:1.3.0@aar'
 
-Easy Initialize:
 
-//initialize 
-FSLogger FSLogger.Init("MyAPP");
+# FSLogger
 
-Pro Initialize: 
-//initialize FSLogger 
-FSLogger.Init("MyAPP"); 
-ArrayList types = new ArrayList<>(); 
-for (LoggerType lt:LoggerType.values()) { 
-	types.add(lt.getCode()); 
-} 
-FSLogger.ADDRules(types);
+An Android Logger with a lot of options for debugging that helps a lot to developers.
+You can easily add logs everywhere in your APP and manage showing them by limit them by Codes or by their Class name. It also will show you that logs was called from which file and which line, you also can see which class and which line called your current method.
 
+##Iniatialization:
+for initialization you just need to add following line into your Application class.
 
-public enum LoggerType { 
-	MainActivity(1), 
-	MenuActivity(2);
+```sh
+//initialize FSLogger
+FSLogger.Init("MyAwsomeAPP");
+```
 
-	private int Code;
-	LoggerType(int code) {
-	    this.Code = code;
-	}
+##Types of Limitation:
+-)You can set different types for make limitation of showing logs.
+>- Class --> Show logs of added class only.
+>- Code --> Show logs of added Codes only. For this type you have to use logout(int code, String message). Other types of logs will not show in this type.
+>- ALL --> This type is exactly the same with "Code" but the only difference is that it will also check added Class too. If your sender class is not added it will not show any log.
+>- ALLOR --> In thisn type it will check both Code and Class codes and if on of them was true it will show the code
+>- NONE --> Do not show any log
+>- NOLimit --> Show all logs
 
-	public int getCode() {
-	    return Code;
-	}
-}
+You can set your type like following in your Application class:
+```sh
+FSLogger.setType(FSLogger.FSLoggerLimitationType.NOLimit);
+```
+
+##Usage:
+You have different option to use it.
+>- Simple: With a simple message
+
+```sh
+FSLogger.logout("your log message");
+
+//Result:
+//[MainActivity.onClick()-336]: your log message
+```
+
+>- Without Message: To track lines of code. you don't need to specify any text for that.
+
+```sh
+FSLogger.logout();
+
+//Result:
+//[MainActivity.onClick()-336]:
+```
+
+>- Without Message with Code: To track lines of code. you don't need to specify any text for that. Specify a code for your log. If you add this code into FSLogger it will show logs with this code otherwise it will just ignore them
+
+```sh
+//Specify code in Application class like:
+//FSLogger.ADDCode(12);
+FSLogger.logout(12);
+
+//Result:
+//[MainActivity.onClick()-336]:
+```
+
+>- With Code: Specify a code for your log. If you add this code into FSLogger it will show logs with this code otherwise it will just ignore them.
+
+```sh
+//Specify code in Application class like:
+//FSLogger.ADDCode(12);
+
+FSLogger.logout(12);
+
+//Result:
+//[MainActivity.onClick()-336]:
+```
+
+##Check Caller of our current fuction:
+If you want to see which class and in which line called your current message you have to add following code into your Application class:
+
+```sh
+//Result Before:
+//[SecondActivity.onClick()-120]: your log message
+
+FSLogger.EnableLoggingWithBackTrace();
+
+//Result After:
+//[MainActivity.onClick()-336]: [SecondActivity.onClick()-120]: your log message
+```
