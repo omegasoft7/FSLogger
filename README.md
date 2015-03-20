@@ -1,6 +1,6 @@
 Download:
 
-compile 'com.github.omegasoft7.FSLogger:FSLogger:1.1.0@aar'
+compile 'com.github.omegasoft7.FSLogger:FSLogger:1.2.0@aar'
 
 Easy Initialize:
 
