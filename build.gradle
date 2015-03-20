@@ -26,7 +26,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 
 
 group = 'com.github.omegasoft7.FSLogger'
-version = '1.3.0'
+version = '1.4.0'
 
 
 task sourcesJar(type: Jar, dependsOn: classes) {
@@ -113,7 +113,7 @@ publishing {
 
             groupId 'com.github.omegasoft7.FSLogger'
             artifactId 'FSLogger'
-            version '1.3.0'
+            version '1.4.0'
 
             from components.java
         }

@@ -125,6 +125,8 @@ public class FSLogger {
 
     private static void logout(String message, int traceLevel)
     {
+        if(message == null) message = "NULL";
+
         if (LOGGING_ENABLED)
         {
             if (message.length() > 3000) {
