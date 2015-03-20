@@ -13,7 +13,7 @@ for initialization you just need to add following line into your Application cla
 
 ```sh
 //initialize FSLogger
-FSLogger.Init("MyAwsomeAPP");
+FSLogger.init("MyAwsomeAPP");
 ```
 
 ##Types of Limitation:
@@ -54,7 +54,7 @@ FSLogger.logout();
 
 ```sh
 //Specify code in Application class like:
-//FSLogger.ADDCode(12);
+//FSLogger.addCode(12);
 FSLogger.logout(12);
 
 //Result:
@@ -65,7 +65,7 @@ FSLogger.logout(12);
 
 ```sh
 //Specify code in Application class like:
-//FSLogger.ADDCode(12);
+//FSLogger.addCode(12);
 
 FSLogger.logout(12);
 
@@ -80,7 +80,7 @@ If you want to see which class and in which line called your current message you
 //Result Before:
 //[SecondActivity.test()-120]: your log message
 
-FSLogger.EnableLoggingWithBackTrace();
+FSLogger.enableLoggingWithBackTrace();
 
 //Result After:
 //[MainActivity.onClick()-336]: [SecondActivity.test()-120]: your log message

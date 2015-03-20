@@ -6,7 +6,7 @@ import java.util.ArrayList;
 /**
  * Created by Farhad
  *
- * A Logger Manager for Android
+ * A Log Manager for Android
  */
 public class FSLogger {
 
@@ -88,7 +88,7 @@ public class FSLogger {
         return false;
     }
 
-    public static boolean RemoveCode(Integer rule) {
+    public static boolean removeCode(Integer rule) {
         if (Rules.contains(rule)) {
             Rules.remove(rule);
             return true;
@@ -97,7 +97,7 @@ public class FSLogger {
         return false;
     }
 
-    public static boolean ADDThisClass(Class cls) {
+    public static boolean addThisClass(Class cls) {
         String className = cls.getSimpleName();
         if (!Classes.contains(className)) {
             Classes.add(className);
@@ -107,7 +107,7 @@ public class FSLogger {
         return false;
     }
 
-    public static boolean RemoveThisClass() {
+    public static boolean removeThisClass() {
         String className = getClassName(5);
 
         if (Classes.contains(className)) {
@@ -147,7 +147,7 @@ public class FSLogger {
     //Logout with type, It will check type and if we are OK with logging it out then it will log it out
     public static void logout(Integer code, String message) {
 
-        if (Validate(code))
+        if (validate(code))
             logout(message, STACK_TRACE_LEVELS_UP);
     }
 
@@ -155,24 +155,24 @@ public class FSLogger {
     //Message here will be blank
     public static void logout(Integer code) {
 
-        if (Validate(code))
+        if (validate(code))
             logout("", STACK_TRACE_LEVELS_UP);
     }
 
 
     //Normal Logout
     public static void logout(String message) {
-        if (Validate(null))
+        if (validate(null))
             logout(message, STACK_TRACE_LEVELS_UP);
     }
 
     //Logout with empty message to just track class name and line number
     public static void logout() {
-        if (Validate(null))
+        if (validate(null))
             logout("", STACK_TRACE_LEVELS_UP);
     }
 
-    private static boolean Validate(Integer code) {
+    private static boolean validate(Integer code) {
 
         String ClassName = getClassName(5);
         switch (Type) {
