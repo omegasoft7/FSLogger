@@ -1,6 +1,6 @@
 # Gradle:
 
-compile 'com.github.omegasoft7.FSLogger:FSLogger:1.4.0@aar'
+compile 'com.github.omegasoft7.FSLogger:FSLogger:1.5.0@aar'
 
 
 # FSLogger

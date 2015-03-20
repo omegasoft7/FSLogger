@@ -40,6 +40,8 @@ public class FSLogger {
     public static FSLogger init(String tag) {
 
         _instance = new FSLogger(tag);
+        Rules.clear();
+        Classes.clear();
 
         return _instance;
 
@@ -74,7 +76,7 @@ public class FSLogger {
         LOGGING_WITH_BACKTRACE_ENABLED = false;
     }
 
-    public static void addCodes(ArrayList<Integer> rules) {
+    public static void setCodes(ArrayList<Integer> rules) {
         Rules.clear();
         Rules = rules;
     }
@@ -97,8 +99,9 @@ public class FSLogger {
         return false;
     }
 
-    public static boolean addThisClass(Class cls) {
+    public static boolean addClass(Class cls) {
         String className = cls.getSimpleName();
+
         if (!Classes.contains(className)) {
             Classes.add(className);
             return true;
@@ -107,8 +110,8 @@ public class FSLogger {
         return false;
     }
 
-    public static boolean removeThisClass() {
-        String className = getClassName(5);
+    public static boolean removeClass(Class cls) {
+        String className = cls.getSimpleName();
 
         if (Classes.contains(className)) {
             Classes.remove(className);
@@ -147,31 +150,47 @@ public class FSLogger {
     }
 
     //Logout with type, It will check type and if we are OK with logging it out then it will log it out
-    public static void logout(Integer code, String message) {
+    public static boolean logout(Integer code, String message) {
 
-        if (validate(code))
+        if (validate(code)) {
             logout(message, STACK_TRACE_LEVELS_UP);
+            return true;
+        }
+
+        return false;
     }
 
     //Logout with type, It will check type and if we are OK with logging it out then it will log it out
     //Message here will be blank
-    public static void logout(Integer code) {
+    public static boolean logout(Integer code) {
 
-        if (validate(code))
+        if (validate(code)) {
             logout("", STACK_TRACE_LEVELS_UP);
+            return true;
+        }
+
+        return false;
     }
 
 
     //Normal Logout
-    public static void logout(String message) {
-        if (validate(null))
+    public static boolean logout(String message) {
+        if (validate(null)) {
             logout(message, STACK_TRACE_LEVELS_UP);
+            return true;
+        }
+
+        return false;
     }
 
     //Logout with empty message to just track class name and line number
-    public static void logout() {
-        if (validate(null))
+    public static boolean logout() {
+        if (validate(null)) {
             logout("", STACK_TRACE_LEVELS_UP);
+            return true;
+        }
+
+        return false;
     }
 
     private static boolean validate(Integer code) {
@@ -199,7 +218,7 @@ public class FSLogger {
 
             case Class:
                 //Apply Class limitations only
-                if (Classes.contains(ClassName)) return true;
+                if (Classes.size() > 0 && Classes.contains(ClassName)) return true;
                 break;
 
             case Code:
