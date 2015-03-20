@@ -23,7 +23,10 @@ public class FSLogger {
 
     private static final int STACK_TRACE_LEVELS_UP = 6;
 
+    private static FSLoggerLimitationType Type = FSLoggerLimitationType.NOLimit;
+
     private static ArrayList<Integer> Rules = new ArrayList<>();
+    private static ArrayList<String> Classes = new ArrayList<>();
 
     //Variables----------------------------------------------------------------------------
 
@@ -72,12 +75,12 @@ public class FSLogger {
         LOGGING_WITH_BACKTRACE_ENABLED = false;
     }
 
-    public static void ADDRules(ArrayList<Integer> rules) {
+    public static void ADDCodes(ArrayList<Integer> rules) {
         Rules.clear();
         Rules = rules;
     }
 
-    public static boolean ADDRule(Integer rule) {
+    public static boolean ADDCode(Integer rule) {
         if (!Rules.contains(rule)) {
             Rules.add(rule);
             return true;
@@ -86,13 +89,39 @@ public class FSLogger {
         return false;
     }
 
-    public static boolean RemoveRule(Integer rule) {
-        if (!Rules.contains(rule)) {
+    public static boolean RemoveCode(Integer rule) {
+        if (Rules.contains(rule)) {
             Rules.remove(rule);
             return true;
         }
 
         return false;
+    }
+
+    public static boolean ADDThisClass(Class cls) {
+        String className = cls.getSimpleName();
+        if (!Classes.contains(className)) {
+            Classes.add(className);
+            return true;
+        }
+
+        return false;
+    }
+
+    public static boolean RemoveThisClass() {
+        String className = getClassName(5);
+
+        if (Classes.contains(className)) {
+            Classes.remove(className);
+            return true;
+        }
+
+        return false;
+    }
+
+
+    public static void setType(FSLoggerLimitationType type) {
+        Type = type;
     }
 
     private static void logout(String message, int traceLevel)
@@ -119,7 +148,7 @@ public class FSLogger {
     //Logout with type, It will check type and if we are OK with logging it out then it will log it out
     public static void logout(Integer code, String message) {
 
-        if (Rules.contains(code))
+        if (Validate(code))
             logout(message, STACK_TRACE_LEVELS_UP);
     }
 
@@ -127,18 +156,58 @@ public class FSLogger {
     //Message here will be blank
     public static void logout(Integer code) {
 
-        if (Rules.contains(code))
+        if (Validate(code))
             logout("", STACK_TRACE_LEVELS_UP);
     }
 
+
     //Normal Logout
     public static void logout(String message) {
-        logout(message, STACK_TRACE_LEVELS_UP);
+        if (Validate(null))
+            logout(message, STACK_TRACE_LEVELS_UP);
     }
 
     //Logout with empty message to just track class name and line number
     public static void logout() {
-        logout("", STACK_TRACE_LEVELS_UP);
+        if (Validate(null))
+            logout("", STACK_TRACE_LEVELS_UP);
+    }
+
+    private static boolean Validate(Integer code) {
+
+        String ClassName = getClassName(5);
+        switch (Type) {
+            case ALL:
+                //Apply ALL Limitations
+                if ((ClassName != null && Classes.contains(ClassName)) && (code != null && Rules.contains(code))) return true;
+                break;
+
+            case ALLOR:
+                //Apply ALL Limitations
+                if (ClassName != null && Classes.contains(ClassName)) return true;
+                if (code != null && Rules.contains(code)) return true;
+                break;
+
+            case NONE:
+                //Don't show any log
+                return false;
+
+            case NOLimit:
+                //There is no limitation. Then show ALL Logs
+                return true;
+
+            case Class:
+                //Apply Class limitations only
+                if (Classes.contains(ClassName)) return true;
+                break;
+
+            case Code:
+                //Apply Code Limitations only
+                if (code != null && Rules.contains(code)) return true;
+                break;
+        }
+
+        return false;
     }
 
     /**
@@ -199,5 +268,14 @@ public class FSLogger {
         res += "[" + getClassName(traceLevel) + "." + getMethodName(traceLevel) + "()-" + getLineNumber(traceLevel) + "]: ";
 
         return res;
+    }
+
+    public enum FSLoggerLimitationType {
+        Class,
+        Code,
+        ALL,
+        ALLOR,
+        NONE,
+        NOLimit;
     }
 }
