@@ -78,10 +78,10 @@ If you want to see which class and in which line called your current message you
 
 ```sh
 //Result Before:
-//[SecondActivity.onClick()-120]: your log message
+//[SecondActivity.test()-120]: your log message
 
 FSLogger.EnableLoggingWithBackTrace();
 
 //Result After:
-//[MainActivity.onClick()-336]: [SecondActivity.onClick()-120]: your log message
+//[MainActivity.onClick()-336]: [SecondActivity.test()-120]: your log message
 ```
