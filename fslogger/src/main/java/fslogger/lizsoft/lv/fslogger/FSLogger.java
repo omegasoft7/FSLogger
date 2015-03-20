@@ -37,7 +37,7 @@ public class FSLogger {
     /*
     * Instantiation of Logger
     * */
-    public static FSLogger Init(String tag) {
+    public static FSLogger init(String tag) {
 
         _instance = new FSLogger(tag);
 
@@ -48,7 +48,7 @@ public class FSLogger {
     /*
         Enable Logger
     */
-    public static void Enable() {
+    public static void enable() {
         LOGGING_ENABLED = true;
     }
 
@@ -56,30 +56,30 @@ public class FSLogger {
     /*
          Disable Logger
     */
-    public static void Disable() {
+    public static void disable() {
         LOGGING_ENABLED = false;
     }
 
     /*
         Enable LOGGING WITH BACKTRACE
     */
-    public static void EnableLoggingWithBackTrace() {
+    public static void enableLoggingWithBackTrace() {
         LOGGING_WITH_BACKTRACE_ENABLED = true;
     }
 
     /*
         Disable LOGGING WITH BACKTRACE
     */
-    public static void DisableLoggingWithBackTrace() {
+    public static void disableLoggingWithBackTrace() {
         LOGGING_WITH_BACKTRACE_ENABLED = false;
     }
 
-    public static void ADDCodes(ArrayList<Integer> rules) {
+    public static void addCodes(ArrayList<Integer> rules) {
         Rules.clear();
         Rules = rules;
     }
 
-    public static boolean ADDCode(Integer rule) {
+    public static boolean addCode(Integer rule) {
         if (!Rules.contains(rule)) {
             Rules.add(rule);
             return true;
