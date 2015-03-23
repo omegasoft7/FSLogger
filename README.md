@@ -13,7 +13,7 @@ for initialization you just need to add following line into your Application cla
 
 ```sh
 //initialize FSLogger
-FSLogger.init("MyAwsomeAPP");
+FSLogger.init("MyAwesomeAPP");
 ```
 
 ##Types of Limitation:
@@ -21,7 +21,7 @@ FSLogger.init("MyAwsomeAPP");
 >- Class --> Show logs of added class only.
 >- Code --> Show logs of added Codes only. For this type you have to use logout(int code, String message). Other types of logs will not show in this type.
 >- ALL --> This type is exactly the same with "Code" but the only difference is that it will also check added Class too. If your sender class is not added it will not show any log.
->- ALLOR --> In thisn type it will check both Code and Class codes and if on of them was true it will show the code
+>- ALLOR --> In this type it will check both Code and Class codes and if on of them was true it will show the code
 >- NONE --> Do not show any log
 >- NOLimit --> Show all logs
 
