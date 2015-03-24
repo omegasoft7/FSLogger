@@ -74,18 +74,18 @@ FSLogger.logout(12);
 ```
 
 
-##Types of Logging:
+##Log Levels:
 You have a few options for logging
 >- FSLogger.logout();  ==  Debug
 >- FSLogger.d();  ==  Debug
 >- FSLogger.e();  ==  Error
 >- FSLogger.v();  ==  Verbose
 >- FSLogger.i();  ==  Info
->- FSLogger.wtf();  ==  wtf
+>- FSLogger.wtf();  ==  Assert
 
 
 
-##Check Caller of our current fuction:
+##Check Caller of our current function:
 If you want to see which class and in which line called your current message you have to add following code into your Application class:
 
 ```sh
