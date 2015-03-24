@@ -46,7 +46,7 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 //            artifactId 'omegasoft7'
 //            version '1.0.0'
 //
-//            inceptionYear '2015'
+//            inceptionYear '2015'wra
 //            licenses {
 //                license {
 //                    name 'MIT'
