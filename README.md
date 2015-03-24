@@ -74,7 +74,7 @@ FSLogger.logout(12);
 ```
 
 
-##Types of Logging:
+##Log Levels:
 You have a few options for logging
 >- FSLogger.logout();  ==  Debug
 >- FSLogger.d();  ==  Debug
