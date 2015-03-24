@@ -85,3 +85,6 @@ FSLogger.enableLoggingWithBackTrace();
 //Result After:
 //[MainActivity.onClick()-336]: [SecondActivity.test()-120]: your log message
 ```
+
+# License
+Apache 2.0
