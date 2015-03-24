@@ -1,6 +1,6 @@
 # Gradle:
 
-compile 'com.github.omegasoft7.FSLogger:FSLogger:1.5.0@aar'
+compile 'com.github.omegasoft7.FSLogger:FSLogger:1.6.0@aar'
 
 
 # FSLogger
@@ -72,6 +72,18 @@ FSLogger.logout(12);
 //Result:
 //[MainActivity.onClick()-336]:
 ```
+
+
+##Types of Logging:
+You have a few options for logging
+>- FSLogger.logout();  ==  Debug
+>- FSLogger.d();  ==  Debug
+>- FSLogger.e();  ==  Error
+>- FSLogger.v();  ==  Verbose
+>- FSLogger.i();  ==  Info
+>- FSLogger.wtf();  ==  wtf
+
+
 
 ##Check Caller of our current fuction:
 If you want to see which class and in which line called your current message you have to add following code into your Application class:
