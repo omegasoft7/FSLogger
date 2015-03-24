@@ -85,7 +85,7 @@ You have a few options for logging
 
 
 
-##Check Caller of our current fuction:
+##Check Caller of our current function:
 If you want to see which class and in which line called your current message you have to add following code into your Application class:
 
 ```sh
