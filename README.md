@@ -81,7 +81,7 @@ You have a few options for logging
 >- FSLogger.e();  ==  Error
 >- FSLogger.v();  ==  Verbose
 >- FSLogger.i();  ==  Info
->- FSLogger.wtf();  ==  wtf
+>- FSLogger.wtf();  ==  ASSERT
 
 
 
