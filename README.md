@@ -1,5 +1,7 @@
 # Gradle:
 
+[![Join the chat at https://gitter.im/omegasoft7/FSLogger](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/omegasoft7/FSLogger?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 compile 'com.github.omegasoft7.FSLogger:FSLogger:1.6.0@aar'
 
 
