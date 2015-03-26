@@ -5,6 +5,7 @@ An Android Logger with a lot of options for debugging that helps a lot to develo
 You can easily add logs everywhere in your APP and manage showing them by limit them by Codes or by their Class name. It also will show you that logs was called from which file and which line, you also can see which class and which line called your current method.
 
 
+![alt tag](https://github.com/omegasoft7/FSLogger/blob/master/logger.png)
 
 
 # Gradle:
