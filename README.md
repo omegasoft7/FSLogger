@@ -1,12 +1,16 @@
-# Gradle:
-
-compile 'com.github.omegasoft7.FSLogger:FSLogger:1.6.0@aar'
-
 
 # FSLogger
 
 An Android Logger with a lot of options for debugging that helps a lot to developers.
 You can easily add logs everywhere in your APP and manage showing them by limit them by Codes or by their Class name. It also will show you that logs was called from which file and which line, you also can see which class and which line called your current method.
+
+
+
+
+# Gradle:
+
+compile 'com.github.omegasoft7.FSLogger:FSLogger:1.6.0@aar'
+
 
 ##Iniatialization:
 for initialization you just need to add following line into your Application class.
