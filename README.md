@@ -10,7 +10,7 @@ You can easily add logs everywhere in your APP and manage showing them by limit 
 
 # Gradle:
 
-compile 'com.github.omegasoft7.FSLogger:FSLogger:1.6.0@aar'
+compile 'com.github.omegasoft7.FSLogger:FSLogger:1.7.0@aar'
 
 
 ##Iniatialization:

@@ -13,9 +13,7 @@ public class FSLogger {
 
     //Variables----------------------------------------------------------------------------
 
-    private static FSLogger _instance;
-
-    private String TAG = "FSLogger";
+    private static String TAG = "FSLogger";
 
     private static boolean LOGGING_ENABLED = true;
 
@@ -38,13 +36,11 @@ public class FSLogger {
     /*
     * Instantiation of Logger
     * */
-    public static FSLogger init(String tag) {
+    public static void init(String tag) {
 
-        _instance = new FSLogger(tag);
+        TAG = tag;
         Rules.clear();
         Classes.clear();
-
-        return _instance;
 
     }
 
@@ -153,22 +149,22 @@ public class FSLogger {
     private static void logout(FSLoggerLogType type, String message) {
         switch (type) {
             case Debug:
-                Log.d(_instance.TAG, message);
+                Log.d(TAG, message);
                 break;
             case Error:
-                Log.e(_instance.TAG, message);
+                Log.e(TAG, message);
                 break;
             case Info:
-                Log.i(_instance.TAG, message);
+                Log.i(TAG, message);
                 break;
             case Verbose:
-                Log.v(_instance.TAG, message);
+                Log.v(TAG, message);
                 break;
             case Warn:
-                Log.w(_instance.TAG, message);
+                Log.w(TAG, message);
                 break;
             case WTF:
-                Log.wtf(_instance.TAG, message);
+                Log.wtf(TAG, message);
                 break;
         }
     }
@@ -602,7 +598,7 @@ public class FSLogger {
     private static String getClassNameMethodNameAndLineNumber(int traceLevel)
     {
         String res = "";
-        if(_instance.LOGGING_WITH_BACKTRACE_ENABLED)
+        if(LOGGING_WITH_BACKTRACE_ENABLED)
             res += "[" + getClassName(traceLevel + 1) + "." + getMethodName(traceLevel + 1) + "()-" + getLineNumber(traceLevel + 1) + "]: ";
         res += "[" + getClassName(traceLevel) + "." + getMethodName(traceLevel) + "()-" + getLineNumber(traceLevel) + "]: ";
 
