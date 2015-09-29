@@ -4,6 +4,9 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import fslogger.lizsoft.lv.fslogger.enums.FSLoggerLogType;
+import fslogger.lizsoft.lv.fslogger.listeners.FSLoggerListener;
+
 /**
  * Created by Farhad
  *
@@ -25,6 +28,8 @@ public class FSLogger {
 
     private static ArrayList<Integer> Rules = new ArrayList<>();
     private static ArrayList<String> Classes = new ArrayList<>();
+
+    private static FSLoggerListener listener;
 
     //Variables----------------------------------------------------------------------------
 
@@ -147,6 +152,9 @@ public class FSLogger {
     }
 
     private static void logout(FSLoggerLogType type, String message) {
+        if (listener != null) {
+            listener.logout(type, TAG, message);
+        }
         switch (type) {
             case Debug:
                 Log.d(TAG, message);
@@ -614,12 +622,7 @@ public class FSLogger {
         NOLimit;
     }
 
-    private enum FSLoggerLogType {
-        Debug,
-        Error,
-        Verbose,
-        Info,
-        Warn,
-        WTF;
+    public static void setListener(FSLoggerListener listener) {
+        FSLogger.listener = listener;
     }
 }
