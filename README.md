@@ -103,5 +103,49 @@ FSLogger.enableLoggingWithBackTrace();
 //[MainActivity.onClick()-336]: [ClassB.test()-120]: your log message
 ```
 
+# Crashlytics
+If you are using Crashlytics(Fabric.io), you can implement a log collector in Application class for your crashlytics like following:
+
+```sh
+FSLogger.setListener(new FSLoggerListener() {
+    @Override
+    public void logout(FSLoggerLogType fsLoggerLogType, String tag, String message) {
+        logCrashlytics(fsLoggerLogType, tag, message);
+    }
+    
+    @Override
+    public void logoutUnsuccess(FSLoggerLogType fsLoggerLogType, String tag, String message) {
+        logCrashlytics(fsLoggerLogType, tag, message);
+    }
+    
+    private void logCrashlytics(FSLoggerLogType fsLoggerLogType, String tag, String message) {
+        int log;
+        switch (fsLoggerLogType) {
+            case Debug:
+                log = Log.DEBUG;
+                break;
+            case Error:
+                log = Log.ERROR;
+                break;
+            case Info:
+                log = Log.INFO;
+                break;
+            case Verbose:
+                log = Log.VERBOSE;
+                break;
+            case Warn:
+                log = Log.WARN;
+                break;
+            case WTF:
+                log = Log.VERBOSE;
+                break;
+            default:
+                log = Log.VERBOSE;
+        }
+        Crashlytics.log(log, tag, message);
+    }
+});
+```
+
 # License
 Apache 2.0
