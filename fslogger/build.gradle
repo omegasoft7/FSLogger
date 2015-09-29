@@ -3,7 +3,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 // This is the library version used when deploying the artifact
-version = "1.8.0"
+version = "1.9.0"
 
 
 android {
@@ -38,7 +38,7 @@ android {
 }
 
 group = 'com.github.omegasoft7.FSLogger'
-version = '1.8.0'                                       // Maven Group ID for the artifact
+version = '1.9.0'                                       // Maven Group ID for the artifact
 
 
 // NOTE: run bintrayUpload and then go to web and publish.
