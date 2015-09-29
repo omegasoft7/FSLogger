@@ -9,7 +9,6 @@ import fslogger.lizsoft.lv.fslogger.listeners.FSLoggerListener;
 
 /**
  * Created by Farhad
- * <p/>
  * A Log Manager for Android
  */
 public class FSLogger {
