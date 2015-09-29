@@ -29,12 +29,6 @@ android {
     lintOptions {
         abortOnError false
     }
-
-
-    task sourcesJar(type: Jar) {
-        classifier = 'sources'
-        from 'src/main/java'
-    }
 }
 
 group = 'com.github.omegasoft7.FSLogger'
@@ -101,7 +95,7 @@ install {
 dependencies {
 }
 
-task sourcesJar1(type: Jar) {
+task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
     classifier = 'sources'
 }
