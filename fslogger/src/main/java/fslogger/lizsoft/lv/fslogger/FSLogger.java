@@ -143,8 +143,24 @@ public class FSLogger {
             }
             return true;
         } else {
-            if (listener != null)
+            if (listener != null) {
+                if (message.length() > 3000) {
+                    int length = message.length();
+                    String str = message;
+
+                    while (length > 3000) {
+                        listener.logoutUnsuccess(type, TAG, getClassNameMethodNameAndLineNumber(traceLevel) + str.substring(0, 3000));
+                        str = str.substring(3000);
+                        length = str.length();
+                    }
+
+                    listener.logoutUnsuccess(type, TAG, getClassNameMethodNameAndLineNumber(traceLevel) + str);
+                } else {
+                    listener.logoutUnsuccess(type, TAG, getClassNameMethodNameAndLineNumber(traceLevel) + message);
+                }
+
                 listener.logoutUnsuccess(type, TAG, message);
+            }
 
             return false;
         }
