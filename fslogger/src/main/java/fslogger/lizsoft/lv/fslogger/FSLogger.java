@@ -9,21 +9,17 @@ import fslogger.lizsoft.lv.fslogger.listeners.FSLoggerListener;
 
 /**
  * Created by Farhad
- *
+ * <p/>
  * A Log Manager for Android
  */
 public class FSLogger {
 
     //Variables----------------------------------------------------------------------------
 
-    private static String TAG = "FSLogger";
-
-    private static boolean LOGGING_ENABLED = true;
-
-    private static boolean LOGGING_WITH_BACKTRACE_ENABLED = false;
-
     private static final int STACK_TRACE_LEVELS_UP = 6;
-
+    private static String TAG = "FSLogger";
+    private static boolean LOGGING_ENABLED = true;
+    private static boolean LOGGING_WITH_BACKTRACE_ENABLED = false;
     private static FSLoggerLimitationType Type = FSLoggerLimitationType.NOLimit;
 
     private static ArrayList<Integer> Rules = new ArrayList<>();
@@ -128,12 +124,10 @@ public class FSLogger {
         Type = type;
     }
 
-    private static void logout(FSLoggerLogType type, String message, int traceLevel)
-    {
-        if(message == null) message = "NULL";
+    private static boolean logout(boolean isValid, FSLoggerLogType type, String message, int traceLevel) {
+        if (message == null) message = "NULL";
 
-        if (LOGGING_ENABLED)
-        {
+        if (LOGGING_ENABLED && isValid) {
             if (message.length() > 3000) {
                 int length = message.length();
                 String str = message;
@@ -148,6 +142,12 @@ public class FSLogger {
             } else {
                 logout(type, getClassNameMethodNameAndLineNumber(traceLevel) + message);
             }
+            return true;
+        } else {
+            if (listener != null)
+                listener.logoutUnsuccess(type, TAG, message);
+
+            return false;
         }
     }
 
@@ -182,45 +182,25 @@ public class FSLogger {
     //Logout with type, It will check type and if we are OK with logging it out then it will log it out
     public static boolean logout(Integer code, String message) {
 
-        if (validate(code)) {
-            logout(FSLoggerLogType.Debug, message, STACK_TRACE_LEVELS_UP);
-            return true;
-        }
-
-        return false;
+        return logout(validate(code), FSLoggerLogType.Debug, message, STACK_TRACE_LEVELS_UP);
     }
 
     //Logout with type, It will check type and if we are OK with logging it out then it will log it out
     //Message here will be blank
     public static boolean logout(Integer code) {
 
-        if (validate(code)) {
-            logout(FSLoggerLogType.Debug, "", STACK_TRACE_LEVELS_UP);
-            return true;
-        }
-
-        return false;
+        return logout(validate(code), FSLoggerLogType.Debug, "", STACK_TRACE_LEVELS_UP);
     }
 
 
     //Normal Logout
     public static boolean logout(String message) {
-        if (validate(null)) {
-            logout(FSLoggerLogType.Debug, message, STACK_TRACE_LEVELS_UP);
-            return true;
-        }
-
-        return false;
+        return logout(validate(null), FSLoggerLogType.Debug, message, STACK_TRACE_LEVELS_UP);
     }
 
     //Logout with empty message to just track class name and line number
     public static boolean logout() {
-        if (validate(null)) {
-            logout(FSLoggerLogType.Debug, "", STACK_TRACE_LEVELS_UP);
-            return true;
-        }
-
-        return false;
+        return logout(validate(null), FSLoggerLogType.Debug, "", STACK_TRACE_LEVELS_UP);
     }
 
     //LogOut-----------------------------------------------------------------------------------------------
@@ -231,45 +211,25 @@ public class FSLogger {
     //Logout with type, It will check type and if we are OK with logging it out then it will log it out
     public static boolean d(Integer code, String message) {
 
-        if (validate(code)) {
-            logout(FSLoggerLogType.Debug, message, STACK_TRACE_LEVELS_UP);
-            return true;
-        }
-
-        return false;
+        return logout(validate(code), FSLoggerLogType.Debug, message, STACK_TRACE_LEVELS_UP);
     }
 
     //Logout with type, It will check type and if we are OK with logging it out then it will log it out
     //Message here will be blank
     public static boolean d(Integer code) {
 
-        if (validate(code)) {
-            logout(FSLoggerLogType.Debug, "", STACK_TRACE_LEVELS_UP);
-            return true;
-        }
-
-        return false;
+        return logout(validate(code), FSLoggerLogType.Debug, "", STACK_TRACE_LEVELS_UP);
     }
 
 
     //Normal Logout
     public static boolean d(String message) {
-        if (validate(null)) {
-            logout(FSLoggerLogType.Debug, message, STACK_TRACE_LEVELS_UP);
-            return true;
-        }
-
-        return false;
+        return logout(validate(null), FSLoggerLogType.Debug, message, STACK_TRACE_LEVELS_UP);
     }
 
     //Logout with empty message to just track class name and line number
     public static boolean d() {
-        if (validate(null)) {
-            logout(FSLoggerLogType.Debug, "", STACK_TRACE_LEVELS_UP);
-            return true;
-        }
-
-        return false;
+        return logout(validate(null), FSLoggerLogType.Debug, "", STACK_TRACE_LEVELS_UP);
     }
 
     //Debug-----------------------------------------------------------------------------------------------
@@ -280,45 +240,25 @@ public class FSLogger {
     //Logout with type, It will check type and if we are OK with logging it out then it will log it out
     public static boolean w(Integer code, String message) {
 
-        if (validate(code)) {
-            logout(FSLoggerLogType.Warn, message, STACK_TRACE_LEVELS_UP);
-            return true;
-        }
-
-        return false;
+        return logout(validate(code), FSLoggerLogType.Warn, message, STACK_TRACE_LEVELS_UP);
     }
 
     //Logout with type, It will check type and if we are OK with logging it out then it will log it out
     //Message here will be blank
     public static boolean w(Integer code) {
 
-        if (validate(code)) {
-            logout(FSLoggerLogType.Warn, "", STACK_TRACE_LEVELS_UP);
-            return true;
-        }
-
-        return false;
+        return logout(validate(code), FSLoggerLogType.Warn, "", STACK_TRACE_LEVELS_UP);
     }
 
 
     //Normal Logout
     public static boolean w(String message) {
-        if (validate(null)) {
-            logout(FSLoggerLogType.Warn, message, STACK_TRACE_LEVELS_UP);
-            return true;
-        }
-
-        return false;
+        return logout(validate(null), FSLoggerLogType.Warn, message, STACK_TRACE_LEVELS_UP);
     }
 
     //Logout with empty message to just track class name and line number
     public static boolean w() {
-        if (validate(null)) {
-            logout(FSLoggerLogType.Warn, "", STACK_TRACE_LEVELS_UP);
-            return true;
-        }
-
-        return false;
+        return logout(validate(null), FSLoggerLogType.Warn, "", STACK_TRACE_LEVELS_UP);
     }
 
     //Warn-----------------------------------------------------------------------------------------------
@@ -329,45 +269,25 @@ public class FSLogger {
     //Logout with type, It will check type and if we are OK with logging it out then it will log it out
     public static boolean i(Integer code, String message) {
 
-        if (validate(code)) {
-            logout(FSLoggerLogType.Info, message, STACK_TRACE_LEVELS_UP);
-            return true;
-        }
-
-        return false;
+        return logout(validate(code), FSLoggerLogType.Info, message, STACK_TRACE_LEVELS_UP);
     }
 
     //Logout with type, It will check type and if we are OK with logging it out then it will log it out
     //Message here will be blank
     public static boolean i(Integer code) {
 
-        if (validate(code)) {
-            logout(FSLoggerLogType.Info, "", STACK_TRACE_LEVELS_UP);
-            return true;
-        }
-
-        return false;
+        return logout(validate(code), FSLoggerLogType.Info, "", STACK_TRACE_LEVELS_UP);
     }
 
 
     //Normal Logout
     public static boolean i(String message) {
-        if (validate(null)) {
-            logout(FSLoggerLogType.Info, message, STACK_TRACE_LEVELS_UP);
-            return true;
-        }
-
-        return false;
+        return logout(validate(null), FSLoggerLogType.Info, message, STACK_TRACE_LEVELS_UP);
     }
 
     //Logout with empty message to just track class name and line number
     public static boolean i() {
-        if (validate(null)) {
-            logout(FSLoggerLogType.Info, "", STACK_TRACE_LEVELS_UP);
-            return true;
-        }
-
-        return false;
+        return logout(validate(null), FSLoggerLogType.Info, "", STACK_TRACE_LEVELS_UP);
     }
 
     //Info-----------------------------------------------------------------------------------------------
@@ -377,45 +297,25 @@ public class FSLogger {
     //Logout with type, It will check type and if we are OK with logging it out then it will log it out
     public static boolean wtf(Integer code, String message) {
 
-        if (validate(code)) {
-            logout(FSLoggerLogType.WTF, message, STACK_TRACE_LEVELS_UP);
-            return true;
-        }
-
-        return false;
+        return logout(validate(code), FSLoggerLogType.WTF, message, STACK_TRACE_LEVELS_UP);
     }
 
     //Logout with type, It will check type and if we are OK with logging it out then it will log it out
     //Message here will be blank
     public static boolean wtf(Integer code) {
 
-        if (validate(code)) {
-            logout(FSLoggerLogType.WTF, "", STACK_TRACE_LEVELS_UP);
-            return true;
-        }
-
-        return false;
+        return logout(validate(code), FSLoggerLogType.WTF, "", STACK_TRACE_LEVELS_UP);
     }
 
 
     //Normal Logout
     public static boolean wtf(String message) {
-        if (validate(null)) {
-            logout(FSLoggerLogType.WTF, message, STACK_TRACE_LEVELS_UP);
-            return true;
-        }
-
-        return false;
+        return logout(validate(null), FSLoggerLogType.WTF, message, STACK_TRACE_LEVELS_UP);
     }
 
     //Logout with empty message to just track class name and line number
     public static boolean wtf() {
-        if (validate(null)) {
-            logout(FSLoggerLogType.WTF, "", STACK_TRACE_LEVELS_UP);
-            return true;
-        }
-
-        return false;
+        return logout(validate(null), FSLoggerLogType.WTF, "", STACK_TRACE_LEVELS_UP);
     }
 
     //WTF-----------------------------------------------------------------------------------------------
@@ -425,45 +325,25 @@ public class FSLogger {
     //Logout with type, It will check type and if we are OK with logging it out then it will log it out
     public static boolean e(Integer code, String message) {
 
-        if (validate(code)) {
-            logout(FSLoggerLogType.Error, message, STACK_TRACE_LEVELS_UP);
-            return true;
-        }
-
-        return false;
+        return logout(validate(code), FSLoggerLogType.Error, message, STACK_TRACE_LEVELS_UP);
     }
 
     //Logout with type, It will check type and if we are OK with logging it out then it will log it out
     //Message here will be blank
     public static boolean e(Integer code) {
 
-        if (validate(code)) {
-            logout(FSLoggerLogType.Error, "", STACK_TRACE_LEVELS_UP);
-            return true;
-        }
-
-        return false;
+        return logout(validate(code), FSLoggerLogType.Error, "", STACK_TRACE_LEVELS_UP);
     }
 
 
     //Normal Logout
     public static boolean e(String message) {
-        if (validate(null)) {
-            logout(FSLoggerLogType.Error, message, STACK_TRACE_LEVELS_UP);
-            return true;
-        }
-
-        return false;
+        return logout(validate(null), FSLoggerLogType.Error, message, STACK_TRACE_LEVELS_UP);
     }
 
     //Logout with empty message to just track class name and line number
     public static boolean e() {
-        if (validate(null)) {
-            logout(FSLoggerLogType.Error, "", STACK_TRACE_LEVELS_UP);
-            return true;
-        }
-
-        return false;
+        return logout(validate(null), FSLoggerLogType.Error, "", STACK_TRACE_LEVELS_UP);
     }
 
     //Error-----------------------------------------------------------------------------------------------
@@ -473,45 +353,27 @@ public class FSLogger {
     //Logout with type, It will check type and if we are OK with logging it out then it will log it out
     public static boolean v(Integer code, String message) {
 
-        if (validate(code)) {
-            logout(FSLoggerLogType.Verbose, message, STACK_TRACE_LEVELS_UP);
-            return true;
-        }
-
-        return false;
+        return logout(validate(code), FSLoggerLogType.Verbose, message, STACK_TRACE_LEVELS_UP);
     }
 
     //Logout with type, It will check type and if we are OK with logging it out then it will log it out
     //Message here will be blank
     public static boolean v(Integer code) {
 
-        if (validate(code)) {
-            logout(FSLoggerLogType.Verbose, "", STACK_TRACE_LEVELS_UP);
-            return true;
-        }
-
-        return false;
+        return logout(validate(code), FSLoggerLogType.Verbose, "", STACK_TRACE_LEVELS_UP);
     }
 
 
     //Normal Logout
     public static boolean v(String message) {
-        if (validate(null)) {
-            logout(FSLoggerLogType.Verbose, message, STACK_TRACE_LEVELS_UP);
-            return true;
-        }
 
-        return false;
+        return logout(validate(null), FSLoggerLogType.Verbose, message, STACK_TRACE_LEVELS_UP);
     }
 
     //Logout with empty message to just track class name and line number
     public static boolean v() {
-        if (validate(null)) {
-            logout(FSLoggerLogType.Verbose, "", STACK_TRACE_LEVELS_UP);
-            return true;
-        }
 
-        return false;
+        return logout(validate(null), FSLoggerLogType.Verbose, "", STACK_TRACE_LEVELS_UP);
     }
 
     //Verbose-----------------------------------------------------------------------------------------------
@@ -522,7 +384,8 @@ public class FSLogger {
         switch (Type) {
             case ALL:
                 //Apply ALL Limitations
-                if ((ClassName != null && Classes.contains(ClassName)) && (code != null && Rules.contains(code))) return true;
+                if ((ClassName != null && Classes.contains(ClassName)) && (code != null && Rules.contains(code)))
+                    return true;
                 break;
 
             case ALLOR:
@@ -558,11 +421,10 @@ public class FSLogger {
      * this class as it has to go a predetermined number of steps up the stack
      * trace. In this case 5.
      *
-     * @author Farhad
      * @return int - Current line number.
+     * @author Farhad
      */
-    private static int getLineNumber(int traceLevel)
-    {
+    private static int getLineNumber(int traceLevel) {
         return Thread.currentThread().getStackTrace()[traceLevel].getLineNumber();
     }
 
@@ -571,11 +433,10 @@ public class FSLogger {
      * class as it has to go a predetermined number of steps up the stack trace.
      * In this case 5.
      *
-     * @author Farhad
      * @return String - Current line number.
+     * @author Farhad
      */
-    private static String getClassName(int traceLevel)
-    {
+    private static String getClassName(int traceLevel) {
         String fileName = Thread.currentThread().getStackTrace()[traceLevel].getFileName();
 
         // Farhad: Removing ".java" and returning class name
@@ -587,11 +448,10 @@ public class FSLogger {
      * this class as it has to go a predetermined number of steps up the stack
      * trace. In this case 5.
      *
-     * @author Farhad
      * @return String - Current line number.
+     * @author Farhad
      */
-    private static String getMethodName(int traceLevel)
-    {
+    private static String getMethodName(int traceLevel) {
         return Thread.currentThread().getStackTrace()[traceLevel].getMethodName();
     }
 
@@ -599,18 +459,21 @@ public class FSLogger {
      * Returns the class name, method name, and line number from the currently
      * executing log call in the form <class_name>.<method_name>()-<line_number>
      *
-     * @author Farhad
      * @return String - String representing class name, method name, and line
-     *         number.
+     * number.
+     * @author Farhad
      */
-    private static String getClassNameMethodNameAndLineNumber(int traceLevel)
-    {
+    private static String getClassNameMethodNameAndLineNumber(int traceLevel) {
         String res = "";
-        if(LOGGING_WITH_BACKTRACE_ENABLED)
+        if (LOGGING_WITH_BACKTRACE_ENABLED)
             res += "[" + getClassName(traceLevel + 1) + "." + getMethodName(traceLevel + 1) + "()-" + getLineNumber(traceLevel + 1) + "]: ";
         res += "[" + getClassName(traceLevel) + "." + getMethodName(traceLevel) + "()-" + getLineNumber(traceLevel) + "]: ";
 
         return res;
+    }
+
+    public static void setListener(FSLoggerListener listener) {
+        FSLogger.listener = listener;
     }
 
     public enum FSLoggerLimitationType {
@@ -620,9 +483,5 @@ public class FSLogger {
         ALLOR,
         NONE,
         NOLimit;
-    }
-
-    public static void setListener(FSLoggerListener listener) {
-        FSLogger.listener = listener;
     }
 }

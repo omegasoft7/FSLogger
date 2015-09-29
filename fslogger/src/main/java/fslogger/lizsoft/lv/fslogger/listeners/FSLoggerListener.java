@@ -7,4 +7,5 @@ import fslogger.lizsoft.lv.fslogger.enums.FSLoggerLogType;
  */
 public interface FSLoggerListener {
     void logout(FSLoggerLogType type, String tag, String message);
+    void logoutUnsuccess(FSLoggerLogType type, String tag, String message);
 }
