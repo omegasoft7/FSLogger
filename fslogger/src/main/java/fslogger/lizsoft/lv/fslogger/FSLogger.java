@@ -158,10 +158,7 @@ public class FSLogger {
                 } else {
                     listener.logoutUnsuccess(type, TAG, getClassNameMethodNameAndLineNumber(traceLevel) + message);
                 }
-
-                listener.logoutUnsuccess(type, TAG, message);
             }
-
             return false;
         }
     }
