@@ -107,6 +107,7 @@ FSLogger.enableLoggingWithBackTrace();
 If you are using Crashlytics(Fabric.io), you can implement a log collector in Application class for your crashlytics like following:
 
 ```sh
+FSLogger.disable();
 FSLogger.setListener(new FSLoggerListener() {
     @Override
     public void logout(FSLoggerLogType fsLoggerLogType, String tag, String message) {
