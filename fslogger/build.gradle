@@ -1,4 +1,10 @@
-apply plugin: 'android-library'
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+// This is the library version used when deploying the artifact
+version = "1.8.0"
+
 
 android {
     compileSdkVersion 21
@@ -10,6 +16,8 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
+
 
     buildTypes {
         release {
@@ -27,14 +35,88 @@ android {
         classifier = 'sources'
         from 'src/main/java'
     }
-
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.1'
+group = 'com.github.omegasoft7.FSLogger'
+version = '1.8.0'                                       // Maven Group ID for the artifact
+
+
+// NOTE: run bintrayUpload and then go to web and publish.
+//       - ensure that the gradle-plugin attribute is on the version
+bintray {
+    user = 'bintray-user'
+    key = 'bintray-key'
+    dryRun = false
+    publish = true
+
+    configurations = ['archives']
+
+    pkg {
+        repo = 'AndroidLibraries'
+        name = 'FSLogger'
+        desc = 'A new logger and log manager for Android that helps a lot to developer for debugging'
+        licenses = ['Apache-2.0']
+        labels = ['Android', 'Logger', 'Locat', 'Manager']
+    }
 }
 
+
+install {
+    repositories.mavenInstaller {
+        // This generates POM.xml with proper parameters
+        pom {
+            project {
+                packaging 'aar'
+
+                // Add your description here
+                name "FSLogger"
+                description "A new logger and log manager for Android that helps a lot to developer for debugging"
+                url "https://github.com/omegasoft7/FSLogger"
+                inceptionYear "2013"
+
+                // Set your license
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'Omegasoft7'
+                        name 'Farhad Sanaei'
+                        email 'omegasoft7@gmail.com'
+                    }
+                }
+                scm {
+                    connection 'https://github.com/omegasoft7/FSLogger.git'
+                    developerConnection 'https://github.com/omegasoft7/FSLogger.git'
+                    url 'https://github.com/omegasoft7/FSLogger.git'
+                }
+            }
+        }
+    }
+}
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+task sourcesJar1(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc1(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc1) {
+    classifier = 'javadoc'
+    from javadoc1.destinationDir
+//    options.encoding = 'UTF-8'
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
 }
